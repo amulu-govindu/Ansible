@@ -9,7 +9,7 @@ terraform {
       version = "<= 6.0.0" #Forcing which version of plugin needs to be used.
       source  = "hashicorp/aws"
     }
-  # }
+   }
   # backend "s3" {
   #   bucket         = "devsecopsb35-tfstate"
   #   key            = "ansible.tfstate"

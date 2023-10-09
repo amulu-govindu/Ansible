@@ -1,7 +1,7 @@
 aws_region           = "us-east-1"
 vpc_cidr             = "10.35.0.0/16"
 vpc_name             = "DevSecOpsB35"
-key_name             = "LaptopKey"
+key_name             = "laptop"
 public_subnet_cidrs  = ["10.35.1.0/24", "10.35.2.0/24", "10.35.3.0/24", "10.35.1.0/24", "10.35.2.0/24", "10.35.3.0/24"]       #List
 private_subnet_cidrs = ["10.35.10.0/24", "10.35.20.0/24", "10.35.30.0/24", "10.35.10.0/24", "10.35.20.0/24", "10.35.30.0/24"] #List
 azs                  = ["us-east-1a", "us-east-1b", "us-east-1c"]                                                             #List
