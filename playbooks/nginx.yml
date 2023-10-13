@@ -27,15 +27,15 @@
   
   - name: copy nginx files
     ansible.builtin.copy:
-      src: {{item}}
-      dest: /var/www/html/{{item}}
+      src: "{{ item }}"
+      dest: /var/www/html/"{{ item }}"
       owner: root
       group: root
       mode: u=rw,g=r,o=r
     with_items:
-      - 'index.html'
-      - 'scorekeeper.js'
-      - 'style.css'
+      - index.html
+      - scorekeeper.js
+      - style.css
   
   # - name: js file
   #   ansible.builtin.copy:
