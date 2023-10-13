@@ -18,7 +18,7 @@
     no_log: true
 
   - name: perform apt update
-    shell: apt update && install -y unzip net-tools
+    shell: apt update && apt install -y unzip net-tools
 
   - name: install nginx
     apt: 
