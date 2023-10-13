@@ -25,26 +25,28 @@
       name: nginx
       state: latest
   
-  - name: index file
+  - name: copy nginx files
     ansible.builtin.copy:
-      src: index.html
-      dest: /var/www/html/index.nginx-debian.html
+      src: {{item}}
+      dest: /var/www/html/{{item}}
       owner: root
       group: root
       mode: u=rw,g=r,o=r
+    with_items:
+      ['index.html','scorekeeper.js','style.css']
   
-  - name: js file
-    ansible.builtin.copy:
-      src: scorekeeper.js
-      dest: /var/www/html/scorekeeper.js
-      owner: root
-      group: root
-      mode: u=rw,g=r,o=r
+  # - name: js file
+  #   ansible.builtin.copy:
+  #     src: scorekeeper.js
+  #     dest: /var/www/html/scorekeeper.js
+  #     owner: root
+  #     group: root
+  #     mode: u=rw,g=r,o=r
 
-  - name: css module
-    ansible.builtin.copy:
-      src: style.css
-      dest: /var/www/html/style.css
-      owner: root
-      group: root
-      mode: u=rw,g=r,o=r
+  # - name: css module
+  #   ansible.builtin.copy:
+  #     src: style.css
+  #     dest: /var/www/html/style.css
+  #     owner: root
+  #     group: root
+  #     mode: u=rw,g=r,o=r
