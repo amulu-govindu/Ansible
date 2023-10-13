@@ -1,6 +1,6 @@
 ---
 - name: Install Redis Server
-  hosts: publicserversip
+  hosts: testserver01
   become: yes
   tasks:
     - name: Update APT cache
