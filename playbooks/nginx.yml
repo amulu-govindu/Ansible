@@ -24,3 +24,27 @@
     apt: 
       name: nginx
       state: latest
+  
+  - name: Copy index file
+    copy:
+    src: index.html
+    dest: /var/www/html/index.nginx-debian.html
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  
+  - name: Copy js file
+    copy:
+    src: scorekeeper.js
+    dest: /var/www/html/scorekeeper.js
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+  - name: Copy css module
+    copy:
+    src: style.css
+    dest: /var/www/html/style.css
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
