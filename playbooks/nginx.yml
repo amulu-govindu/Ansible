@@ -5,11 +5,10 @@
   become_user: root
   gather_facts: yes
   vars:
-    KOPS_VERSION='1.2.6'
+    KOPS_VERSION: '1.2.6'
   tasks:
   - name: check ubuntu version
     shell: cat /etc/lsb-release | grep DISTRIB_DESCRIPTION | cut -d "=" -f2 | tr -d '"'
     register: version
     debug: 
       var: version
-      
