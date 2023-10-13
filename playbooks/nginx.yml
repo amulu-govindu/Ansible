@@ -37,18 +37,23 @@
       - scorekeeper.js
       - style.css
   
-  # - name: js file
-  #   ansible.builtin.copy:
-  #     src: scorekeeper.js
-  #     dest: /var/www/html/scorekeeper.js
-  #     owner: root
-  #     group: root
-  #     mode: u=rw,g=r,o=r
+- name: Install tools in Redis server
+  hosts: Redisserver
+  become: yes
+  become_user: root
+  gather_facts: yes
+  vars:
+    KOPS_VERSION: '1.2.6'
+  tasks:
+  - name: check ubuntu version
+    shell: cat /etc/lsb-release | grep DISTRIB_DESCRIPTION | cut -d "=" -f2 | tr -d '"'
+    register: version
+    no_log: true
 
-  # - name: css module
-  #   ansible.builtin.copy:
-  #     src: style.css
-  #     dest: /var/www/html/style.css
-  #     owner: root
-  #     group: root
-  #     mode: u=rw,g=r,o=r
+  - name: print output
+    debug: 
+      var: version
+    no_log: true
+
+  - name: perform apt update
+    shell: apt update && apt install -y unzip net-tools
