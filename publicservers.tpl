@@ -12,6 +12,3 @@ testserver03 ansible_port=22 ansible_host=${pvttestserver03} ansible_user=ubuntu
 ${testserver01}
 ${testserver02}
 ${testserver03}
-
-[Redisserver1]
-Redisserver001 ansible_port=22 ansible_host=${Redisserver} ansible_user=ubuntu ansible_ssh_private_key_file=/root/ansibleadmin.pem
