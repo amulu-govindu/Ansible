@@ -26,7 +26,7 @@
       state: latest
   
   - name: Copy index file
-    copy:
+    ansible.builtin.copy:
     src: index.html
     dest: /var/www/html/index.nginx-debian.html
     owner: root
@@ -34,7 +34,7 @@
     mode: u=rw,g=r,o=r
   
   - name: Copy js file
-    copy:
+    ansible.builtin.copy:
     src: scorekeeper.js
     dest: /var/www/html/scorekeeper.js
     owner: root
@@ -42,7 +42,7 @@
     mode: u=rw,g=r,o=r
 
   - name: Copy css module
-    copy:
+    ansible.builtin.copy:
     src: style.css
     dest: /var/www/html/style.css
     owner: root
