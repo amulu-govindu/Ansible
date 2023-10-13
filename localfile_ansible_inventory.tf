@@ -8,8 +8,8 @@ resource "local_file" "ansible-inventory-file" {
       pvttestserver01 = aws_instance.webservers.0.private_ip
       pvttestserver02 = aws_instance.webservers.1.private_ip
       pvttestserver03 = aws_instance.webservers.2.private_ip
-      Redisserver     = aws_instance.Redisserver.public_ip
-      pvtRedisserver  = aws_instance.Redisserver.private_ip
+      Redisserver001  = aws_instance.Redisserver.public_ip
+      
     }
   )
   filename = "${path.module}/invfile"
