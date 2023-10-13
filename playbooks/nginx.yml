@@ -33,7 +33,9 @@
       group: root
       mode: u=rw,g=r,o=r
     with_items:
-      ['index.html','scorekeeper.js','style.css']
+      - 'index.html'
+      - 'scorekeeper.js'
+      - 'style.css'
   
   # - name: js file
   #   ansible.builtin.copy:
