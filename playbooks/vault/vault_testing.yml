@@ -1,0 +1,74 @@
+#ansible-playbook -i invfile Playbooks/vault_testing.yml -vv --ask-vault-pass
+---
+  - name: Run AWS Cli Commands On All Servers
+    hosts: privateserversip
+    gather_facts: yes
+    become: yes
+    become_user: root
+    serial: 3
+    vars:
+     user_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          39383035303135623536303337616163343161643666313938303032333138633530373764356339
+          3439626235343536343166353035343938353361616533610a656561386535313366343635396338
+          64356434643531333061356562353537333038656339383463363735613338613736653636633265
+          3831633236626430370a663561633631383031383162323734376131343135346432356530303266
+          33643066386662343230343030623331343534373134663364623537383633393937356562366633
+          63303364336462303231613763613162386333353232663832366664313264666639383539383038
+          64326336343761356431613761313666363532636335313863666164326266666630663035653738
+          37656563323664643633333563363837363034633534613537376338626432326663656233373835
+          32613238323634363765303063316663383961343030326333626233303335343037633635393934
+          3136353262663963376537323365363638373531306632326633
+    tasks:
+       - name: Create .aws folder
+         shell: mkdir -p /root/.aws
+         ignore_errors: yes
+       - name: Copy Encrypted File To /tmp
+         copy:
+           src: /tmp/aws_creds #This Encrypted File Must Be Created Prior To Running The Playbook.
+           dest: /tmp/aws_creds
+           owner: root
+           group: root
+           mode: '0600'
+       - name: Copy Encrypted File To .aws folder
+         copy:
+           src: /tmp/aws_creds #This Encrypted File Must Be Created Prior To Running The Playbook.
+           dest: /root/.aws/credentials
+           owner: root
+           group: root
+           mode: '0600'
+       - name: Check S3 Buckets
+         shell: aws s3 ls | cut -d " " -f 3
+         register: buckets
+       - name: Get VPCS
+         shell: aws ec2 describe-vpcs | jq ".Vpcs[].VpcId" -r
+         register: vpcs
+       - name: Print VPC ID
+         debug:
+          var: vpcs        
+       - name: Creating admin "{{item}}"
+         user:
+           name: "{{item}}"
+           state: present
+           comment: Admin User "{{item}}"
+           groups: root
+           shell: /bin/bash
+           group: sudo
+           password: "{{ '%s' | format(user_password) | regex_replace('\n', '') | password_hash('sha512') }}"
+           password_expire_min: 1
+         with_items:
+         - anand
+         - bala
+         - chandra
+         - david
+       - name: Replace Password Authentication To Yes
+         ansible.builtin.lineinfile:
+           path: /etc/ssh/sshd_config
+           regexp: '^PasswordAuthentication no'
+           line: PasswordAuthentication yes
+           backup: yes
+         notify:
+         -  Restart SSH Service
+    handlers:
+      - name: Restart SSH Service
+        shell: service sshd restart
