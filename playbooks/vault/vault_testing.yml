@@ -1,7 +1,7 @@
 #ansible-playbook -i invfile Playbooks/vault_testing.yml -vv --ask-vault-pass
 ---
   - name: Run AWS Cli Commands On All Servers
-    hosts: privateserversip
+    hosts: publicserversip
     gather_facts: yes
     become: yes
     become_user: root
