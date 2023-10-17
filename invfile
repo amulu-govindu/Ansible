@@ -1,0 +1,15 @@
+[publicserversip]
+server01 ansible_port=22 ansible_host=18.209.213.15  ansible_user=ubuntu ansible_ssh_private_key_file=/root/ansibleadmin.pem 
+server02 ansible_port=22 ansible_host=34.205.71.62 ansible_user=ubuntu ansible_ssh_private_key_file=/root/ansibleadmin.pem
+server03 ansible_port=22 ansible_host=34.226.213.39 ansible_user=ubuntu ansible_ssh_private_key_file=/root/ansibleadmin.pem
+
+[privateserversip]
+testserver01 ansible_port=22 ansible_host=10.35.1.204  ansible_user=ubuntu ansible_ssh_private_key_file=/root/ansibleadmin.pem 
+testserver02 ansible_port=22 ansible_host=10.35.2.148 ansible_user=ubuntu ansible_ssh_private_key_file=/root/ansibleadmin.pem
+testserver03 ansible_port=22 ansible_host=10.35.3.219 ansible_user=ubuntu ansible_ssh_private_key_file=/root/ansibleadmin.pem
+
+
+[publicips]
+18.209.213.15
+34.205.71.62
+34.226.213.39
