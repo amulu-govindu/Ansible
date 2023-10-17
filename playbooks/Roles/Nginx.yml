@@ -1,0 +1,7 @@
+---
+- name: Install Nginx Using Role
+  hosts: privateserversip
+  become: yes
+  become_user: root
+  roles:
+  - { role: nginxinstall }

@@ -1,0 +1,18 @@
+---
+- hosts: privateserversip
+  pre_tasks:
+    - name: Delete Files and Folders - PRE_TASK
+      shell: |
+        rm -rf /tmp/{{ inventory_hostname }}
+        rm -rf /tmp/hostname-*
+        rm -rf /tmp/files/
+      delegate_to: 127.0.0.1
+  tasks:
+  - name: ansible copy file from remote to local
+    fetch:
+     src: /var/www/html/index.nginx-debian.html
+     dest: /tmp/files/ 
+  post_tasks:
+    - name: Check Files In Tmp
+      shell: ls -al /tmp
+      delegate_to: 127.0.0.1
