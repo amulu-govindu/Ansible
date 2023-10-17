@@ -25,7 +25,7 @@
     tags:
     - mysql
   - name: Copy sample data to tmp folder 
-    copy: src=/root/devsecopsb35-ansible-code/Playbooks/Roles/dump.sql dest=/tmp/dump.sql
+    copy: src=/root/Ansible/playbooks/Roles/dump.sql dest=/tmp/dump.sql
     tags:
     - mysql
   - name: insert sample data into database
