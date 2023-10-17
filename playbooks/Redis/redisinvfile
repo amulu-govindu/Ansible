@@ -1,0 +1,2 @@
+[redis]
+rediserver01 ansible_port=22 ansible_host=10.35.1.245  ansible_user=ansibleadmin ansible_ssh_private_key_file=/root/ansibleadmin.pem

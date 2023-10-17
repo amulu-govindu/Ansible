@@ -1,0 +1,7 @@
+---
+- name: Install MySQL Using Ansible Role
+  hosts: privateserversip
+  become: yes
+  become_user: root
+  roles:
+  - { role: geerlingguy.mysql }

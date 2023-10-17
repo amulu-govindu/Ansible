@@ -1,0 +1,63 @@
+#https://medium.com/splunkuserdeveloperadministrator/creating-mysql-databases-with-ansible-925ab28598ab
+#sudo ansible-galaxy install  --roles-path=/etc/ansible/roles/ geerlingguy.mysql --force
+#
+---
+- name: Install MySQL Using Ansible Role
+  hosts: all
+  become: yes
+  become_user: root
+  vars:
+   user_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          63653131623031383534393666323933616534646265393662303735376465623333356234646462
+          3135343036333332346536333931303264303834393337390a643435653066303564376536373063
+          31373338316562656339666635363934306633376632363562626137383438653561633937373534
+          3236366438316131370a356435333261616233356565653762653936363533383233313531393065
+          3231
+  roles:
+  - { role: geerlingguy.mysql }
+  tasks:
+  - name: create a new database 
+    mysql_db: >
+      name=myflixdb 
+      state=present 
+      login_user=root
+    tags:
+    - mysql
+  - name: Copy sample data to tmp folder 
+    copy: src=/root/devsecopsb35-ansible-code/Playbooks/Roles/dump.sql dest=/tmp/dump.sql
+    tags:
+    - mysql
+  - name: insert sample data into database
+    mysql_db: name=myflixdb state=import target=/tmp/dump.sql
+    tags:
+    - mysql
+  - name: Add records to MySQL
+    mysql_db: name=myflixdb state=import target=/tmp/dump.sql
+    tags:
+    - mysql
+
+  - name: Removes all anonymous user accounts
+    community.mysql.mysql_user:
+      name: ''
+      host_all: yes
+      state: absent
+
+  - name: Create database user with name 'bob' and password from vault.
+    community.mysql.mysql_user:
+      name: bob
+      password: "{{ '%s' | format(user_password) | regex_replace('\n', '') | password_hash('sha512') }}"
+      priv: '*.*:ALL,GRANT'
+      host: "localhost"
+      state: present
+
+  - name: Create database user with name 'charlie' and password from vault.
+    community.mysql.mysql_user:
+      name: charlie
+      password: "{{ '%s' | format(user_password) | regex_replace('\n', '') | password_hash('sha512') }}"
+      priv: '*.*:ALL,GRANT'
+      host: 'localhost'
+      state: present
+    
+
+  

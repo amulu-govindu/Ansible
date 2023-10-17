@@ -1,7 +1,7 @@
 ---
 - name: Play for Install Nginx On Linux Servers
   hosts: testserver01:testserver02:testserver03
-  #gather_facts: yes
+  gather_facts: yes
   become: yes
   become_user: root
   vars:
@@ -26,26 +26,14 @@
      name: nginx
      state: latest
 
-  - name: Copy Nginx Index File
-    ansible.builtin.copy:
-     src: index.html
-     dest: /var/www/html/index.nginx-debian.html
-     owner: root
-     group: root
-     mode: u=rw,g=r,o=r
-
-  - name: Copy Nginx JS File
-    ansible.builtin.copy:
-     src: scorekeeper.js
-     dest: /var/www/html/scorekeeper.js
-     owner: root
-     group: root
-     mode: u=rw,g=r,o=r
-
-  - name: Copy Nginx Style File
-    ansible.builtin.copy:
-     src: style.css
-     dest: /var/www/html/style.css
-     owner: root
-     group: root
-     mode: u=rw,g=r,o=r
+  - name: Copy Nginx Files As A Group
+    copy: |
+      src={{ item }}
+      dest=/var/www/html/{{item}}
+      owner=root
+      group=root
+      mode=u=rw,g=r,o=r
+    with_items:
+     - index.nginx-debian.html
+     - style.css
+     - scorekeeper.js

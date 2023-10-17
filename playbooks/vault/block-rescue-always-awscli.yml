@@ -1,5 +1,5 @@
 ---
-- hosts: publicserversip
+- hosts: privateserversip
   gather_facts: yes
   become: yes
   become_user: root
