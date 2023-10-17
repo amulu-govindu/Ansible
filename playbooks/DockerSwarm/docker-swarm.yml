@@ -109,7 +109,7 @@
     tags:
      - managers
   - name: Deploy Test Application
-    hosts: docker_master
+    hosts: docker_managers
     become: yes
     become_user: root
     vars:
